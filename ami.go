@@ -58,7 +58,7 @@ func newAMIAdapter(s *Settings, eventEmitter func(string, string)) (*amiAdapter,
 
 	a.actionsChan = make(chan map[string]string)
 	a.responseChans = make(map[string]chan map[string]string)
-	a.eventsChan = make(chan map[string]string, 4096)
+	a.eventsChan = make(chan map[string]string, 8192)
 	a.pingerChan = make(chan struct{})
 
 	go func() {

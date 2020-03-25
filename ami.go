@@ -307,7 +307,7 @@ func readMessage(r *bufio.Reader) (m map[string]string, err error) {
 	m = make(map[string]string)
 	var responseFollows bool
 	for {
-		kv, _, err := r.ReadLine()
+		kv, err := r.ReadBytes('\n')
 		if len(kv) == 0 {
 			return m, err
 		}

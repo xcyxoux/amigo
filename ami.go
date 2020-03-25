@@ -387,6 +387,10 @@ func (a *amiAdapter) reader(conn net.Conn, stop <-chan struct{}, readErrChan cha
 		for i := 0; ; i++ {
 			var event map[string]string
 			var err error
+			buf := new(bytes.Buffer)
+			buf.ReadFrom(bufReader)
+			s := buf.String()
+			fmt.Println(s)
 			event, err = readMessage(bufReader)
 			if err != nil {
 				chanErr <- err

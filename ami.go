@@ -311,6 +311,7 @@ func readMessage(r *bufio.Reader) (m map[string]string, err error) {
 		if len(kv) == 0 {
 			return m, err
 		}
+		fmt.Println(string(kv))
 
 		var key string
 		i := bytes.IndexByte(kv, ':')

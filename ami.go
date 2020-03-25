@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"io"
 	"net"
 	"strconv"
 	"sync"
@@ -309,7 +310,10 @@ func readMessage(r *bufio.Reader) (m map[string]string, err error) {
 	for {
 		kv, _, err := r.ReadLine()
 		if len(kv) == 0 {
-			return m, err
+			if err != io.EOF {
+				return m, err
+			}
+			return m, nil
 		}
 
 		var key string

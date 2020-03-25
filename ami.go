@@ -309,14 +309,9 @@ func readMessage(r *bufio.Reader) (m map[string]string, err error) {
 	var responseFollows bool
 	for {
 		kv, _, err := r.ReadLine()
-		if err == io.EOF && len(kv) == 0 {
-			continue
-		}
-
 		if len(kv) == 0 {
 			return m, err
 		}
-		//fmt.Println(string(kv))
 
 		var key string
 		i := bytes.IndexByte(kv, ':')

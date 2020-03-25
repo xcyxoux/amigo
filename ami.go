@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"io"
 	"net"
 	"strconv"
 	"sync"
@@ -119,15 +118,13 @@ func newAMIAdapter(s *Settings, eventEmitter func(string, string)) (*amiAdapter,
 				case err = <-pingErrChan:
 				}
 
-				if err != io.EOF {
-					close(chanStop)
-					a.mutex.Lock()
-					a.connected = false
-					a.mutex.Unlock()
+				close(chanStop)
+				a.mutex.Lock()
+				a.connected = false
+				a.mutex.Unlock()
 
-					go a.emitEvent("error", fmt.Sprintf("AMI TCP ERROR: %s", err.Error()))
-					time.Sleep(s.ReconnectInterval)
-				}
+				go a.emitEvent("error", fmt.Sprintf("AMI TCP ERROR: %s", err.Error()))
+				time.Sleep(s.ReconnectInterval)
 			}()
 		}
 	}()

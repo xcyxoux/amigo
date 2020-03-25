@@ -388,9 +388,12 @@ func (a *amiAdapter) reader(conn net.Conn, stop <-chan struct{}, readErrChan cha
 			var event map[string]string
 			var err error
 			event, err = readMessage(bufReader)
-			if err != nil {
+			if err != nil && err != io.EOF {
 				chanErr <- err
 				return
+			}
+			if err == io.EOF {
+				continue
 			}
 
 			event["#"] = strconv.Itoa(i)

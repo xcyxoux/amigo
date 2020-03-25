@@ -383,7 +383,7 @@ func (a *amiAdapter) reader(conn net.Conn, stop <-chan struct{}, readErrChan cha
 	chanErr := make(chan error)
 	chanEvents := make(chan map[string]string)
 	go func() {
-		bufReader := bufio.NewReaderSize(conn, 8192)
+		bufReader := bufio.NewReaderSize(conn, 32768)
 		for i := 0; ; i++ {
 			var event map[string]string
 			var err error
